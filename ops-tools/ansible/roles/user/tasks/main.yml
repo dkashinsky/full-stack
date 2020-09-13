@@ -1,0 +1,25 @@
+---
+- name: ensure 'wheel' group is present
+  group:
+    name: wheel
+    state: present
+
+- name: add user to the wheel group
+  user:
+    name: "{{ REMOTE_USER }}"
+    password: "{{ REMOTE_PASSWORD | string | password_hash('sha512') }}"
+    groups: wheel
+    append: yes
+    state: present
+    createhome: yes
+    update_password: on_create
+  register: user
+
+- name: copy authorized keys for newly added user
+  copy:
+    src: ~/.ssh
+    remote_src: yes
+    dest: "/home/{{ REMOTE_USER }}"
+    owner: "{{ REMOTE_USER }}"
+    group: "{{ REMOTE_USER }}"
+  when: user.changed

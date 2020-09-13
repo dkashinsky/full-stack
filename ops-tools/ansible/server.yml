@@ -1,0 +1,10 @@
+---
+- hosts: development
+  remote_user: root
+  
+  roles: 
+    - role: user
+      tags: ["setup"]
+
+    - role: firewall
+      tags: ["setup"]

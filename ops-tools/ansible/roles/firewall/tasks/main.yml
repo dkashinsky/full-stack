@@ -1,0 +1,12 @@
+---
+- name: install firewalld
+  dnf:
+    name: firewalld
+    state: latest
+    update_cache: yes
+
+- name: enable firewalld service
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
