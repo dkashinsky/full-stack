@@ -1,0 +1,10 @@
+---
+- hosts: development
+  remote_user: "{{ REMOTE_USER }}"
+  become: yes
+  vars:
+    ansible_become_pass: "{{ REMOTE_PASS }}"
+  
+  roles: 
+    - role: nginx
+      tags: ["configuration"]
