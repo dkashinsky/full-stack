@@ -1,4 +1,4 @@
-name: Build Frontend
+name: frontend
 on: [pull_request, workflow_dispatch]
 defaults:
   run:
@@ -17,8 +17,11 @@ jobs:
         with:
           node-version: '12.x'
 
-      - name: Build and Test
-        run: |
-          npm install
-          npm run test:ci
-          npm run build
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm run test:ci
+
+      - name: Build
+        run: npm run build:ci
