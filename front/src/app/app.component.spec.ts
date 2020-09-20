@@ -1,6 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { RoboTextComponent } from './shared/components/robo-text/robo-text.component';
+import { TerminalComponent } from './shared/components/terminal/terminal.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -9,7 +11,9 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        TerminalComponent,
+        RoboTextComponent
       ],
     }).compileComponents();
   });
@@ -20,10 +24,12 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', () => {
+  it('should render title', fakeAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('pre').textContent).toContain('fsdk is under construction!');
-  });
+    tick(3000);
+    fixture.detectChanges();
+    expect(compiled.querySelector('pre').textContent).toContain('fsdk$: app is under construction!');
+  }));
 });
